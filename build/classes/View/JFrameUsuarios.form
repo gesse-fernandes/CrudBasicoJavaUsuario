@@ -236,8 +236,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTelefone">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value=" txt_telefone = new JFormattedTextField(formatotel)&#xd;&#xa;        ;"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="  try {&#xd;&#xa;            formatoTelefone = new MaskFormatter(&quot;(##)#####-####&quot;);&#xd;&#xa;        } catch (Exception e) {&#xd;&#xa;            JOptionPane.showMessageDialog(null, &quot;erro ao inserir campo personalizado &quot;, &quot;Erro&quot;, 0);&#xd;&#xa;        }"/>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
@@ -335,6 +333,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtBuscar">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscarKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>
@@ -348,7 +350,8 @@
             <Component class="javax.swing.JTable" name="tabela">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="0">
+                  <Table columnCount="6" rowCount="0">
+                    <Column editable="false" title="codigo" type="java.lang.Object"/>
                     <Column editable="false" title="Nome" type="java.lang.Object"/>
                     <Column editable="false" title="Email" type="java.lang.Object"/>
                     <Column editable="false" title="Telefone" type="java.lang.Object"/>
@@ -357,6 +360,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaMousePressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

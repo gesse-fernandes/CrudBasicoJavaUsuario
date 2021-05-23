@@ -1,7 +1,10 @@
 package Controller;
 
+import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import DAO.UsuarioDao;
 import Model.UsuarioModel;
@@ -38,11 +41,8 @@ public class UsuarioController {
             x = false;
         }
 
-        else if (user.getTelefone().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencha o Campo Telefone", "Erro", 0, new ImageIcon(
-                    "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
-            x = false;
-        } else if (user.getEmail().equals("")) {
+        
+        else if (user.getEmail().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencha o Campo Email", "Erro", 0, new ImageIcon(
                     "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
             x = false;
@@ -78,14 +78,15 @@ public class UsuarioController {
             JOptionPane.showMessageDialog(null, "Selecione o seu estado civil", "Erro", 0, new ImageIcon(
                     "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
             x = false;
-        } else if (!isTelefoneValido(user.getTelefone()))
-
-        {
-            x = false;
         } else {
-            usuarioDao.cadastrar(user);
+          
             x = true;
         }
+        if(x == true)
+        {
+            usuarioDao.cadastrar(user);
+            return x;
+        }        
         return x;
 
     }
@@ -101,5 +102,25 @@ public class UsuarioController {
             JOptionPane.showMessageDialog(null, msg, "Dados inválidos", JOptionPane.WARNING_MESSAGE);
         }
         return status;
+    }
+
+    public String controleCodigo()
+    {
+        return usuarioDao.proximoUsuario();
+    }
+
+    public void controlePesquisa(String pesquisa, DefaultTableModel modelo)
+    {
+        usuarioDao.buscarUsuario(pesquisa, modelo);
+    }
+
+    public void controlePesquisa(String pesquisa, List<String> lista)
+    {
+        usuarioDao.buscarUsuario(pesquisa, lista);
+    }
+
+    public UsuarioModel preencherCampos(int id)
+    {
+        return usuarioDao.PreecherCampos(id);
     }
 }

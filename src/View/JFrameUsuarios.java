@@ -25,8 +25,10 @@ public class JFrameUsuarios extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         initComponents();
+        habilitarCampos(false);
         usuarioModel = new UsuarioModel();
         usuarioController = new UsuarioController();
+        modelo =  (DefaultTableModel)tabela.getModel();
     }
 
     /**
@@ -50,14 +52,6 @@ public class JFrameUsuarios extends javax.swing.JFrame {
         txtEndereco = new javax.swing.JTextField();
         txtTelefone = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        /*
-        try {
-            formatoTelefone = new MaskFormatter("(##)#####-####");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao inserir campo personalizado ", "Erro", 0);
-        }*/
-      // javax.swing.JTextField txtTelefone  = new JFormattedTextField(formatoTelefone)
-        ;
         jLabel5 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -94,7 +88,6 @@ public class JFrameUsuarios extends javax.swing.JFrame {
         jLabel3.setText("Endereço");
 
         jLabel4.setText("Telefone");
-        txtTelefone.setDocument(new ControleCampo(ControleCampo.tamanhoTelefone, EnumCampo.SOMENTE_NUMERO));
 
         jLabel5.setText("Email");
 
@@ -116,20 +109,36 @@ public class JFrameUsuarios extends javax.swing.JFrame {
 
         jLabel11.setText("Pesquisar");
 
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Email", "Telefone", "Profissão", "Endereço"
+                "codigo", "Nome", "Email", "Telefone", "Profissão", "Endereço"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(tabela);
@@ -314,13 +323,49 @@ public class JFrameUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_novoActionPerformed
+    private void tabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMousePressed
+        // TODO add your handling code here:
+        habilitarCampos(true);
+        usuarioModel = usuarioController
+                .preencherCampos(Integer.parseInt(modelo.getValueAt(tabela.getSelectedRow(), 0).toString()));
+    txtId.setText(usuarioModel.getId() + "");
+      
+        txtNome.setText(usuarioModel.getNome());
+        txtEndereco.setText(usuarioModel.getEndereco());
+        txtTelefone.setText(usuarioModel.getTelefone());
+        txtEmail.setText(usuarioModel.getEmail());
+        txtCidade.setText(usuarioModel.getCidade());
+        txtUf.setText(usuarioModel.getUf());
+        cbcSexo.setSelectedItem(usuarioModel.getSexo());
+        cbcProf.setSelectedItem(usuarioModel.getProfissao());
+        cbcEstCiv.setSelectedItem(usuarioModel.getEstadoCivil());
+    
+    }//GEN-LAST:event_tabelaMousePressed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {
+        modelo.setNumRows(0);
+        usuarioController.controlePesquisa(txtBuscar.getText(), modelo);
+        // TODO add your handling code here:
+    }                                         
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {
+        modelo.setNumRows(0);
+        usuarioController.controlePesquisa(txtBuscar.getText(), modelo);
+        // TODO add your handling code here:
+    }                                     
+
+    private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {
+        habilitarCampos(true);
+        usuarioController.controleCodigo();
+        txtId.setText(usuarioController.controleCodigo());
+
 
     }// GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//
         PegarDados();
         usuarioController.verificaDados(usuarioModel);
+        limparCampos();
     }// GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_save1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_save1ActionPerformed
@@ -413,12 +458,43 @@ public class JFrameUsuarios extends javax.swing.JFrame {
         usuarioModel.setNome(txtNome.getText());
 
         usuarioModel.setEndereco(txtEndereco.getText());
-        usuarioModel.setTelefone(txtTelefone.getText());
+        String telefone = txtTelefone.getText();
+        if(usuarioController.isTelefoneValido(telefone))
+        {
+            usuarioModel.setTelefone(txtTelefone.getText());
+        }
+        
         usuarioModel.setEmail(txtEmail.getText());
         usuarioModel.setUf(txtUf.getText());
         usuarioModel.setCidade(txtCidade.getText());
         usuarioModel.setSexo(cbcSexo.getSelectedItem().toString());
         usuarioModel.setProfissao(cbcProf.getSelectedItem().toString());
         usuarioModel.setEstadoCivil(cbcEstCiv.getSelectedItem().toString());
+    }
+    final void limparCampos()
+    {
+        txtId.setText("");
+        txtNome.setText("");
+        txtEndereco.setText("");
+        txtTelefone.setText("");
+        txtEmail.setText("");
+        txtCidade.setText("");
+        txtUf.setText("");
+        cbcSexo.setSelectedIndex(0);
+        cbcProf.setSelectedIndex(0);
+        cbcEstCiv.setSelectedIndex(0);
+    }
+
+    final void habilitarCampos(boolean valor)
+    {
+        txtNome.setEnabled(valor);
+        txtEndereco.setEnabled(valor);
+        txtTelefone.setEnabled(valor);
+        txtEmail.setEnabled(valor);
+        txtCidade.setEnabled(valor);
+        txtUf.setEnabled(valor);
+        cbcSexo.setEnabled(valor);
+        cbcProf.setEnabled(valor);
+        cbcEstCiv.setEnabled(valor);
     }
 }

@@ -3,6 +3,8 @@ package Utilitarios;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.swing.JOptionPane;
+
 
 public class Conexao {
     private final String URL = "jdbc:mysql://127.0.0.1:3306/biblioteca";
@@ -17,7 +19,7 @@ public class Conexao {
             Con.setAutoCommit(false);
           //  JOptionPane.showMessageDialog(null, "Conectado com Sucesso", "Conectado", 1);
         } catch (Exception ex) {
-            //JOptionPane.showMessageDialog(null, "Erro ao Conectar com o Banco", "Erro", 0);
+         //   JOptionPane.showMessageDialog(null, "Erro ao Conectar com o Banco", "Erro", 0);
         }
     }
     
@@ -39,8 +41,8 @@ public class Conexao {
             //TODO: handle exception
         }
     }
-    /*
-    public static void main(String[] args) {
+    
+    /*public static void main(String[] args) {
         Conexao.getConnection();
     }*/
 }
