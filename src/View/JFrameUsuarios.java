@@ -369,11 +369,18 @@ public class JFrameUsuarios extends javax.swing.JFrame {
     }// GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_save1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_save1ActionPerformed
-
+        PegarDados();
+        usuarioController.verificaDadosEditar(usuarioModel);
+        limparCampos();
+        txtBuscar.setText("");
+        habilitarCampos(true);
     }// GEN-LAST:event_btn_save1ActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_deleteActionPerformed
-
+        modelo.removeRow(tabela.getSelectedRow());
+        usuarioController.deletar(usuarioModel);
+        limparCampos();
+        habilitarCampos(true);
     }// GEN-LAST:event_btn_deleteActionPerformed
 
     /**

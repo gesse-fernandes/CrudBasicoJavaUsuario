@@ -120,4 +120,69 @@ public class UsuarioDao {
         return user;
     }
 
+    public boolean existe(UsuarioModel user)
+    {
+        boolean status = false;
+        try {
+            String SELECT = "SELECT email FROM usuarios where email = ?";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(SELECT);
+            st.setString(1, user.getEmail());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                status = true;
+            }
+
+        } catch (Exception e) {
+            //TODO: handle exception
+            JOptionPane.showMessageDialog(null, "erro ao buscar Email do usuario", "Erro", 0, new ImageIcon(
+                    "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
+        }
+        return status;
+    }
+    
+    public void editarUsuario(UsuarioModel user)
+    {
+        try {
+            String UPDATE = "UPDATE usuarios set nome = ?, endereco=?, telefone=?, email=?, uf=?, cidade=?, sexo=?, profissao=?, estadoCivil =? where id = ? ";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(UPDATE);
+            st.setString(1, user.getNome());
+            st.setString(2, user.getEndereco());
+            st.setString(3, user.getTelefone());
+            st.setString(4, user.getEmail());
+            st.setString(5, user.getUf());
+            st.setString(6, user.getCidade());
+            st.setString(7, user.getSexo());
+            st.setString(8, user.getProfissao());
+            st.setString(9, user.getEstadoCivil());
+            st.setInt(10, user.getId());
+            st.execute();
+            JOptionPane.showMessageDialog(null, "Registro Edidato com sucesso", "Sucesso", 1, new ImageIcon(
+                    "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\ok.png"));
+        } catch (Exception e) {
+            //TODO: handle exception
+            JOptionPane.showMessageDialog(null, "Erro ao Editar no banco de dados", "Erro", 0, new ImageIcon(
+                    "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
+        }
+    }
+
+    public void deletarUsuario(UsuarioModel usuario)
+    {
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir?");
+        if(confirma == JOptionPane.YES_OPTION)
+        {
+            String DELETE = "delete from usuarios where id = ?";
+            try {
+                PreparedStatement st = Conexao.getConnection().prepareStatement(DELETE);
+                st.setInt(1, usuario.getId());
+                st.executeUpdate();
+                Conexao.getConnection().commit();
+                JOptionPane.showMessageDialog(null, "Excluido com sucesso", "Sucesso", 1, new ImageIcon(
+                        "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\ok.png"));
+            } catch (Exception e) {
+                //TODO: handle exception
+                JOptionPane.showMessageDialog(null, "Erro ao Editar no banco de dados"+ e.getMessage(),"Erro", 0, new ImageIcon(
+                        "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
+            }
+        }
+    }
 }
