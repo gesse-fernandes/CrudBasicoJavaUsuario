@@ -36,7 +36,6 @@ public class UsuarioDao {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar no banco de dados", "Erro", 0, new ImageIcon(
                     "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
-            System.out.println(e.getMessage());
         }
     }
 }

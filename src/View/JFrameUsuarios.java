@@ -9,11 +9,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.UsuarioController;
 import Model.UsuarioModel;
-
-/**
- *
- * @author gesse
- */
 public class JFrameUsuarios extends javax.swing.JFrame {
     UsuarioModel usuarioModel;
     UsuarioController usuarioController;
