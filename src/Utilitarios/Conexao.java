@@ -3,7 +3,6 @@ package Utilitarios;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import javax.swing.JOptionPane;
 
 public class Conexao {
     private final String URL = "jdbc:mysql://127.0.0.1:3306/biblioteca";
