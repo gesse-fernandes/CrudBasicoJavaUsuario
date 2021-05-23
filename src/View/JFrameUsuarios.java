@@ -88,6 +88,7 @@ public class JFrameUsuarios extends javax.swing.JFrame {
         jLabel3.setText("Endereço");
 
         jLabel4.setText("Telefone");
+        txtTelefone.setDocument(new ControleCampo(ControleCampo.tamanhoTelefone,EnumCampo.SOMENTE_NUMERO));
 
         jLabel5.setText("Email");
 
