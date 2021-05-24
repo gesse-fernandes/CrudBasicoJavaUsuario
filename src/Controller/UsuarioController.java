@@ -193,10 +193,6 @@ public class UsuarioController {
                     "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
             x = false;
 
-        } else if (usuarioDao.existe(user)) {
-            JOptionPane.showMessageDialog(null, "Já existe alguem com esse email tente outro", "Erro", 0, new ImageIcon(
-                    "C:\\Users\\gesse\\OneDrive\\Documentos\\NetBeansProjects\\SofyDay\\src\\Imagens\\btn_sair.png"));
-            x = false;
         } else {
 
             x = true;

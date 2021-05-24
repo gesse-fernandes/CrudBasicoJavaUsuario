@@ -8,7 +8,7 @@ public class ControleCampo extends PlainDocument {
 
     public enum EnumCampo {
         PADRAO, SOMENTE_LETRAS, SOMENTE_LETRAS_ESPACO, SOMENTE_LETRAS_NUMERO, SOMENTE_LETRAS_NUMERO_ESPACO,
-        SOMENTE_NUMERO, SOMENTE_NUMERO_ESPACO
+        SOMENTE_NUMERO, SOMENTE_NUMERO_ESPACO, CASAS_DECIMAIS;
     }
 
     
@@ -77,6 +77,7 @@ public class ControleCampo extends PlainDocument {
             else if (tipo == EnumCampo.SOMENTE_NUMERO_ESPACO && !Character.isDigit(str.charAt(i))
                     && !Character.isSpaceChar(str.charAt(i)))
                 return false;
+           
 
         }
 
